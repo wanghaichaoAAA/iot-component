@@ -1,10 +1,8 @@
 package utils
 
 import (
-	"encoding/binary"
 	"encoding/hex"
 	"fmt"
-	"math"
 	"strings"
 	"sync"
 	"time"
