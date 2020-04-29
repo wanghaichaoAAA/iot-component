@@ -64,7 +64,7 @@ func (b SortByPNO) Less(i, j int) bool {
 	return b.MultiPackageMessageArr[i].PNO < b.MultiPackageMessageArr[j].PNO
 }
 
-func NewMessage(mn, message string) (*Hj212Message, error) {
+func NewMessage(message string) (*Hj212Message, error) {
 	qnStr := utils.SubstringBetween(message, PrefixQN, Suffix)
 	stStr := utils.SubstringBetween(message, PrefixST, Suffix)
 	cnStr := utils.SubstringBetween(message, PrefixCN, Suffix)
@@ -73,9 +73,7 @@ func NewMessage(mn, message string) (*Hj212Message, error) {
 	flagStr := utils.SubstringBetween(message, PrefixFlag, Suffix)
 	cpStr := utils.SubstringBetween(message, PrefixCP, "&&")
 	crcStr := utils.GetCRCString(message)
-	if mnStr == "" || mnStr != mn {
-		return nil, errors.New("MN mismatch")
-	}
+
 	crcCheckSuccess := utils.CRC16Check(message)
 	if !crcCheckSuccess {
 		return nil, errors.New("CRC verification failed")
