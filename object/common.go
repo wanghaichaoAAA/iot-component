@@ -1,4 +1,4 @@
-package object
+package main
 
 type DataType string
 

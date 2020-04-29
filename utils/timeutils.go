@@ -24,8 +24,7 @@ func GetDataTime(timeStr string) string {
 }
 
 func GetTimeByQN(qnStr string) (time.Time, error) {
-	str := "20200318090013089"
-	runes := []rune(str)
+	runes := []rune(qnStr)
 	timeLayout := "2006-01-02-15-04-05"
 	y := string(runes[0:4])
 	m := string(runes[4:6])

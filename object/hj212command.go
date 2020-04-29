@@ -1,4 +1,4 @@
-package object
+package main
 
 type Hj212Code struct {
 	Code string
@@ -86,4 +86,4 @@ var CN9014 = Hj212Code{"9014", "数据应答,数据应答命令"}
 //-------------自定义命令-------------
 var CN2072 = Hj212Code{"2072", "自定义命令-报警数据"}
 var CN9020 = Hj212Code{"9020", "心跳消息"}
-var CN9021 = Hj212Code{"9021", "设备控制"}
+var CN9021 = Hj212Code{"9021", "开机信息，接受私有反控指令"}
