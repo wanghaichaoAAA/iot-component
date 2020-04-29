@@ -237,3 +237,17 @@ func CleanMultiPkgMessagesMap() {
 		}
 	}
 }
+
+func MakeHeartbeatMsg(mnStr string) string {
+	qnStr := utils.GenerateQNStr()
+	commandStr := PrefixQN + qnStr + Suffix +
+		PrefixCN + CN9020.Code + Suffix +
+		PrefixFlag + Flag100.Code + Suffix +
+		PrefixMN + mnStr + Suffix +
+		PrefixCP + SuffixCP
+	commandLength := len([]rune(commandStr))
+	commandLengthStr := fmt.Sprintf("%04d", commandLength)
+	crcCode := utils.GenerateCRCCode(commandStr)
+	commandStr = StartMark + commandLengthStr + commandStr + crcCode
+	return commandStr
+}
