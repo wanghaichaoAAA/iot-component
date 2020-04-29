@@ -1,4 +1,4 @@
-package main
+package object
 
 type Hj212Code struct {
 	Code string
