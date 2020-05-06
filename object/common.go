@@ -101,6 +101,7 @@ const MnHj21205 string = "hj212-05"
 const Yes string = "1"
 const No string = "0"
 
+const RtuWholeLog = "rtuWholeLog"
 const RtuRunLog = "rtuRunLog"
 const RtuRealTimeData = "rtuRealTimeData"
 const RtuTcpLog = "rtuTcpLog"
