@@ -24,3 +24,8 @@ type ResendDataObj struct {
 	EndTime   string `json:"endTime"`
 	DataType  int    `json:"dataType"`
 }
+
+type RemoteControlResendDataObj struct {
+	ResponseType string
+	ResponseData ResendDataObj
+}
