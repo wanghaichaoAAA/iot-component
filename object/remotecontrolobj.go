@@ -17,3 +17,10 @@ func (obj *RemoteControlObj) GetBase64String() (string, error) {
 	}
 	return base64.StdEncoding.EncodeToString(bytes), nil
 }
+
+type ResendDataObj struct {
+	RtuMN     string `json:"rtuMN"`
+	StartTime string `json:"startTime"`
+	EndTime   string `json:"endTime"`
+	DataType  int    `json:"dataType"`
+}
