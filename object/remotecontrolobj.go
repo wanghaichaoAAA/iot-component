@@ -6,8 +6,8 @@ import (
 )
 
 type RemoteControlObj struct {
-	ResponseType string
-	ResponseData interface{}
+	ResponseType string      `json:"response_type"`
+	ResponseData interface{} `json:"response_data"`
 }
 
 func (obj *RemoteControlObj) GetBase64String() (string, error) {
