@@ -74,10 +74,13 @@ func NewMessage(message string) (*Hj212Message, error) {
 	cpStr := utils.SubstringBetween(message, PrefixCP, "&&")
 	crcStr := utils.GetCRCString(message)
 
-	crcCheckSuccess := utils.CRC16Check(message)
-	if !crcCheckSuccess {
-		return nil, errors.New("CRC verification failed")
+	if !strings.HasPrefix(cnStr, "9003") {
+		crcCheckSuccess := utils.CRC16Check(message)
+		if !crcCheckSuccess {
+			return nil, errors.New("CRC verification failed")
+		}
 	}
+
 	binaryStrArr := utils.ConvertToBinaryArr(flagStr)
 	if len(binaryStrArr) != 8 {
 		return nil, errors.New("Flag format error")
