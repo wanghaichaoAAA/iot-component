@@ -76,3 +76,14 @@ type DeviceFactorObj struct {
 	FactorName     string  `json:"-" gorm:"-"`                         //因子名称
 	FactorUnit     string  `json:"-" gorm:"-"`                         //计量单位（浓度）
 }
+
+type RemControlSerialPortDebugObj struct {
+	RtuMN      string `json:"rtuMN"`
+	Serial     string `json:"serial"`      //串口
+	Baudrate   string `json:"baudrate"`    //波特率
+	DataBit    string `json:"data_bit"`    //数据位
+	CheckBit   string `json:"check_bit"`   //校验位
+	StopBit    string `json:"stop_bit"`    //停止位
+	VerifyType string `json:"verify_type"` //验证方式
+	Message    string `json:"message"`
+}
