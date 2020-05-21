@@ -23,6 +23,7 @@ type ResendDataObj struct {
 	StartTime string `json:"startTime"`
 	EndTime   string `json:"endTime"`
 	DataType  int    `json:"dataType"`
+	UUID      string `json:"uuid"`
 }
 
 type RemoteControlResendDataObj struct {
