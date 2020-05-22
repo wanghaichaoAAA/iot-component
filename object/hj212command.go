@@ -11,6 +11,18 @@ var ExeRtn2 = Hj212Code{"2", "执行失败，但不知道原因"}
 var ExeRtn3 = Hj212Code{"3", "命令请求条件错误"}
 var ExeRtn99 = Hj212Code{"99", "执行失败数据库更新失败"}
 
+var QnRtn1 = Hj212Code{"1", "准备执行请求"}
+var QnRtn2 = Hj212Code{"2", "请求被拒绝"}
+var QnRtn3 = Hj212Code{"3", "PW错误"}
+var QnRtn4 = Hj212Code{"4", "MN错误"}
+var QnRtn5 = Hj212Code{"5", "ST错误"}
+var QnRtn6 = Hj212Code{"6", "Flag错误"}
+var QnRtn7 = Hj212Code{"7", "QN错误"}
+var QnRtn8 = Hj212Code{"8", "CN错误"}
+var QnRtn9 = Hj212Code{"8", "CRC校验失败"}
+var QnRtn100 = Hj212Code{"100", "位置错误"}
+var QnRtn99 = Hj212Code{"99", "请求参数错误错误"}
+
 //----------------------------------flag编码---------------------------------------
 var Flag101 = Hj212Code{"5", "hj2122017版协议，不需要分包，需要应答"}
 var Flag100 = Hj212Code{"4", "hj2122017版协议，不需要分包，不需要应答"}
