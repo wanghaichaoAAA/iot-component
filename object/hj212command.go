@@ -9,7 +9,12 @@ type Hj212Code struct {
 var ExeRtn1 = Hj212Code{"1", "执行成功"}
 var ExeRtn2 = Hj212Code{"2", "执行失败，但不知道原因"}
 var ExeRtn3 = Hj212Code{"3", "命令请求条件错误"}
+var ExeRtn4 = Hj212Code{"4", "通讯超时"}
+var ExeRtn5 = Hj212Code{"5", "系统繁忙不能执行"}
+var ExeRtn6 = Hj212Code{"6", "系统故障"}
+var ExeRtn98 = Hj212Code{"98", "执行失败，请求参数格式错误"}
 var ExeRtn99 = Hj212Code{"99", "执行失败数据库更新失败"}
+var ExeRtn100 = Hj212Code{"100", "没有数据"}
 
 var QnRtn1 = Hj212Code{"1", "准备执行请求"}
 var QnRtn2 = Hj212Code{"2", "请求被拒绝"}
