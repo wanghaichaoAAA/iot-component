@@ -10,6 +10,14 @@ type RemoteControlObj struct {
 	ResponseData interface{} `json:"response_data"`
 }
 
+func (obj *RemoteControlObj) GetJSONString() string {
+	bytes, err := json.Marshal(*obj)
+	if err != nil {
+		return ""
+	}
+	return string(bytes)
+}
+
 func (obj *RemoteControlObj) GetBase64String() (string, error) {
 	bytes, err := json.Marshal(*obj)
 	if err != nil {
