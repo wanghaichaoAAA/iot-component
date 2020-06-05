@@ -117,3 +117,5 @@ const RtuNewBasicSetting = "rtuNewBasicSetting"
 const RtuParameter = "rtuParameter"
 const RtuConfiguredFactors = "rtuConfiguredFactors"
 const RtuSerialDebug = "rtuSerialDebug"
+
+const RFID = "RFID"
