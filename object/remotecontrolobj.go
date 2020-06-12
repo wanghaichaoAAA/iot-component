@@ -35,8 +35,8 @@ type ResendDataObj struct {
 }
 
 type RemoteControlResendDataObj struct {
-	ResponseType string
-	ResponseData ResendDataObj
+	ResponseType string        `json:"response_type"`
+	ResponseData ResendDataObj `json:"response_data"`
 }
 
 type DeviceObj struct {
