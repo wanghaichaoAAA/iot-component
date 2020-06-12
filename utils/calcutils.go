@@ -19,6 +19,9 @@ func HexToFloatString(hexStr string) string {
 
 //将flag转换成8位二进制字符串
 func ConvertToBinaryArr(numStr string) []rune {
+	if numStr == "" {
+		numStr = "4"
+	}
 	numInt, err := strconv.Atoi(numStr)
 	if err != nil {
 		//utilsLogger.Error("不是数字")

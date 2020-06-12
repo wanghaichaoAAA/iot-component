@@ -65,6 +65,7 @@ func (b SortByPNO) Less(i, j int) bool {
 }
 
 func NewMessage(message string) (*Hj212Message, error) {
+	message = message[strings.Index(message, "##"):]
 	qnStr := utils.SubstringBetween(message, PrefixQN, Suffix)
 	stStr := utils.SubstringBetween(message, PrefixST, Suffix)
 	cnStr := utils.SubstringBetween(message, PrefixCN, Suffix)
