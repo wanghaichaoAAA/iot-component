@@ -69,7 +69,7 @@ func NewMessage(message string) (*Hj212Message, error) {
 	if startIndex < 0 {
 		return nil, errors.New("No start with ##")
 	}
-	message = message[:]
+	message = message[startIndex:]
 	qnStr := utils.SubstringBetween(message, PrefixQN, Suffix)
 	stStr := utils.SubstringBetween(message, PrefixST, Suffix)
 	cnStr := utils.SubstringBetween(message, PrefixCN, Suffix)
