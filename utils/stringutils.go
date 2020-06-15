@@ -17,6 +17,9 @@ func SubstringBetween(value string, a string, b string) string {
 	}
 	posLast := -1
 	for i := posFirst + len(a); i < len(value); i++ {
+		if i+len(b) > len(value) {
+			break
+		}
 		s := value[i:(i + len(b))]
 		if s == b {
 			posLast = i
