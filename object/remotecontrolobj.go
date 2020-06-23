@@ -23,7 +23,7 @@ func (obj *RemoteControlObj) GetBase64String() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return base64.StdEncoding.EncodeToString(bytes), nil
+	return base64.URLEncoding.EncodeToString(bytes), nil
 }
 
 type ResendDataObj struct {
