@@ -119,3 +119,6 @@ const RtuConfiguredFactors = "rtuConfiguredFactors"
 const RtuSerialDebug = "rtuSerialDebug"
 
 const RFID = "RFD"
+
+const RtuOnline = "9998"
+const RtuOffline = "9999"
