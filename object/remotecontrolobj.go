@@ -26,13 +26,14 @@ func (obj *RemoteControlObj) GetBase64String() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	base64Str := base64.URLEncoding.EncodeToString(bytes)
-	tmpByte := CompressBase64Str([]byte(base64Str))
-	return string(tmpByte), nil
+	tmpByte := CompressBase64Str(bytes)
+	base64Str := base64.URLEncoding.EncodeToString(tmpByte)
+
+	return base64Str, nil
 }
 
-func DeCompress(in string) string {
-	buffer := bytes.NewBuffer([]byte(in))
+func DeCompress(in []byte) string {
+	buffer := bytes.NewBuffer(in)
 	var out bytes.Buffer
 	r, _ := zlib.NewReader(buffer)
 	io.Copy(&out, r)
