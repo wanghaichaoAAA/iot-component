@@ -1,8 +1,11 @@
 package object
 
 import (
+	"bytes"
+	"compress/zlib"
 	"encoding/base64"
 	"encoding/json"
+	"io"
 )
 
 type RemoteControlObj struct {
@@ -23,7 +26,25 @@ func (obj *RemoteControlObj) GetBase64String() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return base64.URLEncoding.EncodeToString(bytes), nil
+	base64Str := base64.URLEncoding.EncodeToString(bytes)
+	tmpByte := CompressBase64Str([]byte(base64Str))
+	return string(tmpByte), nil
+}
+
+func DeCompress(in string) string {
+	buffer := bytes.NewBuffer([]byte(in))
+	var out bytes.Buffer
+	r, _ := zlib.NewReader(buffer)
+	io.Copy(&out, r)
+	return out.String()
+}
+
+func CompressBase64Str(in []byte) []byte {
+	var b bytes.Buffer
+	w := zlib.NewWriter(&b)
+	w.Write(in)
+	w.Close()
+	return b.Bytes()
 }
 
 type ResendDataObj struct {
