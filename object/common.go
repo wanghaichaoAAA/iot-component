@@ -120,5 +120,5 @@ const RtuSerialDebug = "rtuSerialDebug"
 
 const RFID = "RFD"
 
-const RtuOnline = "9998"
-const RtuOffline = "9999"
+const RtuOnlineFlag = "9998"
+const RtuOfflineFlag = "9999"
