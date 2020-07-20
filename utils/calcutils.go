@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+//十六进制字符串转换成浮点数
 // 41360000H --> 11.375
 func HexToFloatString(hexStr string) string {
 	n, _ := strconv.ParseUint(hexStr, 16, 32)
@@ -17,7 +18,7 @@ func HexToFloatString(hexStr string) string {
 	return fmt.Sprintf("%f", f)
 }
 
-//将flag转换成8位二进制字符串
+//将flag值转换成8位二进制字符串
 func ConvertToBinaryArr(numStr string) []rune {
 	if numStr == "" {
 		numStr = "4"
@@ -39,11 +40,13 @@ func ConvertToBinaryArr(numStr string) []rune {
 	return []rune(fmt.Sprintf("%08s", s))
 }
 
+// 格式化小数位数
 func FormatFloat(floatNum float64, capacity int) string {
 	formatStr := "%." + strconv.Itoa(capacity) + "f"
 	return fmt.Sprintf(formatStr, floatNum)
 }
 
+// 字节数组转换成整数
 func GetIntValue(data []byte) string {
 	length := len(data)
 	switch length {
