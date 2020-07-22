@@ -60,6 +60,7 @@ func GetIntValue(data []byte) string {
 	}
 }
 
+// 字符串转换成整数
 func StringToInt(str string) int {
 	i, err := strconv.Atoi(str)
 	if err != nil {
