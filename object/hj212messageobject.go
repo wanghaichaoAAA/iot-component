@@ -166,7 +166,7 @@ var CP_MAX_LENGTH = 950
 
 func MakeMessage(qnStr, stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp string) []string {
 	if len([]rune(cpStr)) > CP_MAX_LENGTH {
-		return subpackage(qnStr, stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp)
+		return subpackage(stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp)
 	}
 	commandStr := PrefixQN + qnStr + Suffix +
 		PrefixST + stStr + Suffix +
@@ -182,7 +182,7 @@ func MakeMessage(qnStr, stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isRe
 	return []string{commandStr}
 }
 
-func subpackage(qnStr, stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp string) []string {
+func subpackage(stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp string) []string {
 	cpLength := len([]rune(cpStr))
 	totalPkgF := float64(cpLength) / float64(CP_MAX_LENGTH)
 	totalPkg := int(math.Ceil(totalPkgF))
