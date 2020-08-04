@@ -188,12 +188,13 @@ func subpackage(qnStr, stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isRes
 	totalPkg := int(math.Ceil(totalPkgF))
 	var messages []string
 	for i := 0; i < totalPkg; i++ {
+		qn := utils.GenerateQNStr()
 		start := i * CP_MAX_LENGTH
 		end := start + CP_MAX_LENGTH
 		if end > cpLength {
 			end = cpLength
 		}
-		commandStr := PrefixQN + qnStr + Suffix +
+		commandStr := PrefixQN + qn + Suffix +
 			PrefixST + stStr + Suffix +
 			PrefixCN + cnStr + Suffix +
 			PrefixPW + pwStr + Suffix +
