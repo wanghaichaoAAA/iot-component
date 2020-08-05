@@ -120,11 +120,11 @@ type RemControlSerialPortDebugObj struct {
 }
 
 type TFactorShowConfigReq struct {
-	Id          int64
-	FactorCode  string
-	FactorName  string
-	FactorId    int
-	St          string
-	FactorValue string
-	Contents    string
+	Id          int64  `json:"id"`
+	FactorCode  string `json:"factor_code"`
+	FactorName  string `json:"factor_name"`
+	FactorId    int    `json:"factor_id"`
+	St          string `json:"st"`
+	FactorValue string `json:"factor_value"`
+	Contents    string `json:"contents"`
 }
