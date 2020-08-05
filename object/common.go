@@ -123,3 +123,7 @@ const RFID = "RFD"
 
 const RtuOnlineFlag = "9998"
 const RtuOfflineFlag = "9999"
+
+const RtuGetFactorShowList = "rtuGetFactorShowList"
+const RtuAddFactorShow = "rtuAddFactorShow"
+const RtuDelFactorShow = "rtuDelFactorShow"

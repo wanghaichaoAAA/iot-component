@@ -118,3 +118,13 @@ type RemControlSerialPortDebugObj struct {
 	VerifyType string `json:"verify_type"` //验证方式
 	Message    string `json:"message"`
 }
+
+type TFactorShowConfigReq struct {
+	Id          int64
+	FactorCode  string
+	FactorName  string
+	FactorId    int
+	St          string
+	FactorValue string
+	Contents    string
+}
