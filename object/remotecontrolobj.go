@@ -128,3 +128,14 @@ type TFactorShowConfigReq struct {
 	FactorValue string `json:"factor_value"`
 	Contents    string `json:"contents"`
 }
+
+type AddFactorShowConfigReq struct {
+	RtuMN       string `json:"rtuMN"`
+	UUID        string `json:"uuid"`
+	Id          int64  `json:"id"`
+	FactorCode  string `json:"factor_code"`
+	FactorId    int    `json:"factor_id"`
+	St          string `json:"st"`
+	FactorValue string `json:"factor_value"`
+	Contents    string `json:"contents"`
+}
