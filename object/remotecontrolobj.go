@@ -95,10 +95,10 @@ type DeviceFactorObj struct {
 	IsInteger      int     `json:"is_integer"`                         //是否整数
 	Decimals       int     `json:"decimals"`                           //小数位
 	IsAnalog       int     `json:"is_analog"`                          //模拟量 1开启模拟量，2不开器模拟量
-	AnalogUpper    float32 `json:"analog_upper" gorm:"default:'0.0'" ` //量程上限（选择模拟量后必填）
-	AnalogLower    float32 `json:"analog_lower" gorm:"default:'0.0'" ` //量程下线（选择模拟量后必填）
-	AlarmUpper     float32 `json:"alarm_upper"`                        //警告上限
-	AlarmLower     float32 `json:"alarm_lower"`                        //警告下线
+	AnalogUpper    float64 `json:"analog_upper" gorm:"default:'0.0'" ` //量程上限（选择模拟量后必填）
+	AnalogLower    float64 `json:"analog_lower" gorm:"default:'0.0'" ` //量程下线（选择模拟量后必填）
+	AlarmUpper     float64 `json:"alarm_upper"`                        //警告上限
+	AlarmLower     float64 `json:"alarm_lower"`                        //警告下线
 	IsSendMsg      int     `json:"is_send_msg"`                        //发送报警信息
 	IsControlRelay int     `json:"is_control_relay"`                   //是否控制继电器，1控制继电器，2不控制继电器
 	RelayId        string  `json:"relay_id"`                           //继电器id（选择继电器后必填）
