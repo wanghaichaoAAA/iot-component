@@ -71,12 +71,30 @@ func NewMessage(message string) (*Hj212Message, error) {
 	}
 	message = message[startIndex:]
 	qnStr := utils.SubstringBetween(message, PrefixQN, Suffix)
+	if qnStr == "" {
+		return nil, errors.New("missing qn field")
+	}
 	stStr := utils.SubstringBetween(message, PrefixST, Suffix)
+	if stStr == "" {
+		return nil, errors.New("missing st field")
+	}
 	cnStr := utils.SubstringBetween(message, PrefixCN, Suffix)
-	pwStr := utils.SubstringBetween(message, PrefixPW, Suffix)
+	if cnStr == "" {
+		return nil, errors.New("missing cn field")
+	}
 	mnStr := utils.SubstringBetween(message, PrefixMN, Suffix)
+	if mnStr == "" {
+		return nil, errors.New("missing mn field")
+	}
 	flagStr := utils.SubstringBetween(message, PrefixFlag, Suffix)
+	if flagStr == "" {
+		return nil, errors.New("missing flag field")
+	}
 	cpStr := utils.SubstringBetween(message, PrefixCP, "&&")
+	if cpStr == "" {
+		return nil, errors.New("missing cp field")
+	}
+	pwStr := utils.SubstringBetween(message, PrefixPW, Suffix)
 	crcStr := utils.GetCRCString(message)
 
 	if !strings.HasPrefix(cnStr, "9003") {
@@ -133,6 +151,9 @@ func NewMessage(message string) (*Hj212Message, error) {
 
 func packageingMultiPackageMessages(msg *Hj212Message) (*Hj212Message, error) {
 	mapName := msg.MN + "-" + msg.QN
+	go time.AfterFunc(time.Minute*5, func() {
+		MultiPkgMessagesMap.Remove(mapName)
+	})
 	getValue, isExist := MultiPkgMessagesMap.Get(mapName)
 	if !isExist {
 		msgMap := cmap.New()
@@ -153,12 +174,12 @@ func packageingMultiPackageMessages(msg *Hj212Message) (*Hj212Message, error) {
 		var cps string
 		for _, msg := range msgArr {
 			cps += msg.CP
-			hjLog.Info("packageingMultiPackageMessages -->", msg)
 		}
 		msg.CP = cps
+		MultiPkgMessagesMap.Remove(mapName)
 		return msg, nil
 	}
-	return nil, errors.New("receive remaining multi package messages")
+	return nil, errors.New("multi package messages")
 }
 
 // max length for cp
