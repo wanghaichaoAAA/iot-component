@@ -76,3 +76,11 @@ func GetTimeByString(str string) time.Time {
 	time, _ := time.Parse("20060102150405", str)
 	return time
 }
+
+func GetTimeStringByTimeString(str string) string {
+	parse, err := time.Parse("20060102150405", str)
+	if err != nil {
+		return ""
+	}
+	return parse.Format("2006-01-02 15:04:05")
+}
