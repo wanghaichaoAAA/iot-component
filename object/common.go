@@ -127,3 +127,5 @@ const RtuOfflineFlag = "9999"
 const RtuGetFactorShowList = "rtuGetFactorShowList"
 const RtuAddFactorShow = "rtuAddFactorShow"
 const RtuDelFactorShow = "rtuDelFactorShow"
+
+const RtuSimpleInfo = "rtuSimpleInfo"
