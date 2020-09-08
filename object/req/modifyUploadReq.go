@@ -4,7 +4,7 @@
 */
 package req
 
-type ModifyUpload struct {
+type ModifyUploadReq struct {
 	MnId       int64 `json:"mn_id"`
 	ModifyType int   `json:"modify_type"`
 }
