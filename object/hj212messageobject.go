@@ -48,7 +48,8 @@ type Hj212Message struct {
 	Unpack      int         `json:"-"` //是否有数据包序号
 	PNUM        int         `json:"-"` //总包数
 	PNO         int         `json:"-"` //包号
-	CP          interface{} `json:"cp"`
+	CP          string      `json:"cp"`
+	CPArr       interface{} `json:"cp_arr"`
 	CRC         string      `json:"-"`
 	OriginalMsg string      `json:"original_msg"`
 }
@@ -173,7 +174,7 @@ func packageingMultiPackageMessages(msg *Hj212Message) (*Hj212Message, error) {
 		sort.Sort(SortByPNO{msgArr})
 		var cps string
 		for _, msg := range msgArr {
-			cps += msg.CP.(string)
+			cps += msg.CP
 		}
 		msg.CP = cps
 		MultiPkgMessagesMap.Remove(mapName)
