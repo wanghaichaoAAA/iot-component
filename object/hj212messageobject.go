@@ -37,21 +37,21 @@ const (
 )
 
 type Hj212Message struct {
-	QN          string      `json:"qn"`
-	ST          string      `json:"st"`
-	CN          string      `json:"cn"`
-	PW          string      `json:"pw"`
-	MN          string      `json:"mn"`
-	Flag        string      `json:"flag"`
-	Version     int         `json:"-"` //消息版本号 `json:"-"`
-	Response    int         `json:"-"` //是否应答 `json:"-"`
-	Unpack      int         `json:"-"` //是否有数据包序号
-	PNUM        int         `json:"-"` //总包数
-	PNO         int         `json:"-"` //包号
-	CP          string      `json:"cp"`
-	CPArr       interface{} `json:"cp_arr"`
-	CRC         string      `json:"-"`
-	OriginalMsg string      `json:"original_msg"`
+	QN          string
+	ST          string
+	CN          string
+	PW          string
+	MN          string
+	Flag        string
+	Version     int `json:"-"` //消息版本号 `json:"-"`
+	Response    int `json:"-"` //是否应答 `json:"-"`
+	Unpack      int `json:"-"` //是否有数据包序号
+	PNUM        int `json:"-"` //总包数
+	PNO         int `json:"-"` //包号
+	CP          string
+	CPArr       interface{}
+	CRC         string
+	OriginalMsg string
 }
 
 type MultiPackageMessageArr []Hj212Message
