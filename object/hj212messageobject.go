@@ -268,6 +268,7 @@ func MakeHeartbeatMsg(mnStr string) string {
 	qnStr := utils.GenerateQNStr()
 	commandStr := PrefixQN + qnStr + Suffix +
 		PrefixCN + CN9020.Code + Suffix +
+		PrefixST + ST91.Code + Suffix +
 		PrefixFlag + Flag100.Code + Suffix +
 		PrefixMN + mnStr + Suffix +
 		PrefixCP + SuffixCP
