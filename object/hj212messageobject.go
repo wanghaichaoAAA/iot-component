@@ -72,13 +72,7 @@ func NewMessage(message string) (*Hj212Message, error) {
 	}
 	message = message[startIndex:]
 	qnStr := utils.SubstringBetween(message, PrefixQN, Suffix)
-	if qnStr == "" {
-		return nil, errors.New("missing qn field")
-	}
 	stStr := utils.SubstringBetween(message, PrefixST, Suffix)
-	if stStr == "" {
-		return nil, errors.New("missing st field")
-	}
 	cnStr := utils.SubstringBetween(message, PrefixCN, Suffix)
 	if cnStr == "" {
 		return nil, errors.New("missing cn field")
