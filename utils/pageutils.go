@@ -2,7 +2,7 @@ package utils
 
 func GetPageParam(pageNumInt, limitInt int64) (page int64, start int64, offset int64, err error) {
 
-	if limitInt <= 0 {
+	if limitInt <= 0 || limitInt > 100 {
 		limitInt = 20
 	}
 	if pageNumInt <= 0 {
