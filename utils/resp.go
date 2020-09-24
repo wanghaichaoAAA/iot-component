@@ -70,6 +70,11 @@ func ErrorResult(msg string) (httpcode int, contentType string, respdata []byte)
 	return http.StatusOK, "application/json", resp.JSONBytes()
 }
 
+func LoginFailureResult() (httpcode int, contentType string, respdata []byte) {
+	resp := NewRespMsg(-2, "登录失效,请重新登录", nil)
+	return http.StatusOK, "application/json", resp.JSONBytes()
+}
+
 func PageResult(page, pagesize, total, pagecount int64, data interface{}) (httpcode int, contentType string, respdata []byte) {
 	resp := PageResp{
 		Code:      200,
