@@ -112,9 +112,8 @@ var CN3310 = Hj212Code{"3310", "标液核查"}
 var CN3311 = Hj212Code{"3311", "零点核查"}
 var CN3312 = Hj212Code{"3312", "跨度核查"}
 var CN3313 = Hj212Code{"3313", "标样校准"}
-var CN3314 = Hj212Code{"3314", "零点核查"}
 
-var CustomActionList = []Hj212Code{CN3301, CN3302, CN3303, CN3304, CN3305, CN3306, CN3307, CN3308, CN3309, CN3310, CN3311, CN3312, CN3313, CN3314}
+var CustomActionList = []Hj212Code{CN3301, CN3302, CN3303, CN3304, CN3305, CN3306, CN3307, CN3308, CN3309, CN3310, CN3311, CN3312, CN3313}
 
 //-------------其他平台控制命令-------------
 var CN3901 = Hj212Code{"3901", "控制雾炮"}
