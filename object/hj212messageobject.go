@@ -5,6 +5,7 @@ import (
 	"fmt"
 	cmap "github.com/orcaman/concurrent-map"
 	log "github.com/sirupsen/logrus"
+	"github.com/wanghaichaoAAA/iot-component/rsa"
 	"github.com/wanghaichaoAAA/iot-component/utils"
 	"math"
 	"sort"
@@ -43,11 +44,12 @@ type Hj212Message struct {
 	PW          string
 	MN          string
 	Flag        string
-	Version     int `json:"-"` //消息版本号 `json:"-"`
-	Response    int `json:"-"` //是否应答 `json:"-"`
-	Unpack      int `json:"-"` //是否有数据包序号
-	PNUM        int `json:"-"` //总包数
-	PNO         int `json:"-"` //包号
+	Version     int    `json:"-"` //消息版本号 `json:"-"`
+	Response    int    `json:"-"` //是否应答 `json:"-"`
+	Unpack      int    `json:"-"` //是否有数据包序号
+	PNUM        int    `json:"-"` //总包数
+	PNO         int    `json:"-"` //包号
+	EY          string `json:"-"` //是否rsa加密
 	CP          string
 	CPArr       interface{}
 	CRC         string
@@ -271,4 +273,152 @@ func MakeHeartbeatMsg(mnStr string) string {
 	crcCode := utils.GenerateCRCCode(commandStr)
 	commandStr = StartMark + commandLengthStr + commandStr + crcCode
 	return commandStr
+}
+
+func MakeRsaMessage(qnStr, stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp, isEncrypt, publicKey string) []string {
+	var encrypted bool
+	if isEncrypt == "true" && publicKey != "" {
+		encrypted = true
+		tmp, err := rsa.PublicEncrypt(cpStr, publicKey)
+		if err != nil {
+			fmt.Println("PublicEncrypt error:", err.Error(), qnStr, stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp, isEncrypt, publicKey)
+			return []string{}
+		}
+		cpStr = tmp
+	}
+	if len([]rune(cpStr)) > CP_MAX_LENGTH {
+		return subpackageRsaMessage(stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp, encrypted)
+	}
+	commandStr := PrefixQN + qnStr + Suffix +
+		PrefixST + stStr + Suffix +
+		PrefixCN + cnStr + Suffix +
+		PrefixPW + pwStr + Suffix +
+		PrefixMN + mnStr + Suffix
+	if encrypted {
+		commandStr += "EY=1;"
+	}
+	commandStr += PrefixFlag + getFlag(protocolVersion, isResp, "0") + Suffix +
+		PrefixCP + cpStr + SuffixCP
+	commandLength := len([]rune(commandStr))
+	commandLengthStr := fmt.Sprintf("%04d", commandLength)
+	crcCode := utils.GenerateCRCCode(commandStr)
+	commandStr = StartMark + commandLengthStr + commandStr + crcCode
+	return []string{commandStr}
+}
+func subpackageRsaMessage(stStr, cnStr, pwStr, mnStr, cpStr, protocolVersion, isResp string, encrypted bool) []string {
+	cpLength := len([]rune(cpStr))
+	totalPkgF := float64(cpLength) / float64(CP_MAX_LENGTH)
+	totalPkg := int(math.Ceil(totalPkgF))
+	var messages []string
+	for i := 0; i < totalPkg; i++ {
+		qn := utils.GenerateQNStr()
+		start := i * CP_MAX_LENGTH
+		end := start + CP_MAX_LENGTH
+		if end > cpLength {
+			end = cpLength
+		}
+		commandStr := PrefixQN + qn + Suffix +
+			PrefixST + stStr + Suffix +
+			PrefixCN + cnStr + Suffix +
+			PrefixPW + pwStr + Suffix +
+			PrefixMN + mnStr + Suffix
+
+		if encrypted {
+			commandStr += "EY=1;"
+		}
+
+		commandStr += PrefixFlag + getFlag(protocolVersion, isResp, "1") + Suffix +
+			PrefixPNUM + strconv.Itoa(totalPkg) + Suffix +
+			PrefixPNO + strconv.Itoa(i+1) + Suffix +
+			PrefixCP + cpStr[start:end] + SuffixCP
+		commandLength := len([]rune(commandStr))
+		commandLengthStr := fmt.Sprintf("%04d", commandLength)
+		crcCode := utils.GenerateCRCCode(commandStr)
+		commandStr = StartMark + commandLengthStr + commandStr + crcCode
+		messages = append(messages, commandStr)
+	}
+	return messages
+}
+
+func NewRsaMessage(message string, privateKey string) (*Hj212Message, error) {
+	startIndex := strings.Index(message, "##")
+	if startIndex < 0 {
+		return nil, errors.New("No start with ##")
+	}
+	message = message[startIndex:]
+	qnStr := utils.SubstringBetween(message, PrefixQN, Suffix)
+	stStr := utils.SubstringBetween(message, PrefixST, Suffix)
+	cnStr := utils.SubstringBetween(message, PrefixCN, Suffix)
+	if cnStr == "" {
+		return nil, errors.New("missing cn field")
+	}
+	mnStr := utils.SubstringBetween(message, PrefixMN, Suffix)
+	if mnStr == "" {
+		return nil, errors.New("missing mn field")
+	}
+	flagStr := utils.SubstringBetween(message, PrefixFlag, Suffix)
+	if flagStr == "" {
+		return nil, errors.New("missing flag field")
+	}
+	cpStr := utils.SubstringBetween(message, PrefixCP, "&&")
+	pwStr := utils.SubstringBetween(message, PrefixPW, Suffix)
+	crcStr := utils.GetCRCString(message)
+	eyStr := utils.SubstringBetween(message, "EY=", Suffix)
+
+	if !strings.HasPrefix(cnStr, "9003") {
+		crcCheckSuccess := utils.CRC16Check(message)
+		if !crcCheckSuccess {
+			return nil, errors.New("CRC verification failed")
+		}
+	}
+
+	binaryStrArr := utils.ConvertToBinaryArr(flagStr)
+	if len(binaryStrArr) != 8 {
+		return nil, errors.New("Flag format error")
+	}
+	// is need respone
+	var respInt int
+	// is need packageing multi package messages
+	var unpackInt int
+
+	if string(binaryStrArr[7]) == "1" {
+		respInt = 1
+	}
+	if string(binaryStrArr[6]) == "1" {
+		unpackInt = 1
+	}
+	msgObj := Hj212Message{
+		QN:          qnStr,
+		ST:          stStr,
+		CN:          cnStr,
+		PW:          pwStr,
+		MN:          mnStr,
+		Flag:        flagStr,
+		Response:    respInt,
+		Unpack:      unpackInt,
+		EY:          eyStr,
+		CP:          cpStr,
+		CRC:         crcStr,
+		OriginalMsg: message,
+	}
+
+	if msgObj.EY == "1" {
+		tmp, _ := rsa.PriKeyDecrypt(msgObj.CP, privateKey)
+		msgObj.CP = tmp
+	}
+
+	if unpackInt == 0 {
+		return &msgObj, nil
+	}
+	pnumStr := utils.SubstringBetween(message, PrefixPNUM, Suffix)
+	pnoStr := utils.SubstringBetween(message, PrefixPNO, Suffix)
+	pnumInt, _ := strconv.Atoi(pnumStr)
+	msgObj.PNUM = pnumInt
+	pnoInt, _ := strconv.Atoi(pnoStr)
+	msgObj.PNO = pnoInt
+	msgs, err := packageingMultiPackageMessages(&msgObj)
+	if err != nil {
+		return nil, err
+	}
+	return msgs, nil
 }
