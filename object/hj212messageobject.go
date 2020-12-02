@@ -403,8 +403,10 @@ func NewRsaMessage(message string, privateKey string) (*Hj212Message, error) {
 	}
 
 	if msgObj.EY == "1" {
+		fmt.Println("对数据进行私钥解密:", msgObj.CP)
 		tmp, _ := rsa.PriKeyDecrypt(msgObj.CP, privateKey)
 		msgObj.CP = tmp
+		fmt.Println("私钥解密成功,解密后数据:", msgObj.CP)
 	}
 
 	if unpackInt == 0 {

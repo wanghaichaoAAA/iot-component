@@ -26,3 +26,13 @@ func Test_GenerateRsaMessage(t *testing.T) {
 	bytes, _ := json.Marshal(&hj212Message)
 	fmt.Println(string(bytes))
 }
+
+func TestEncypt(t *testing.T) {
+	publicKey := `-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTzIbpwConk8hEHK4Kz2UgOhZC7xkoIdQ62vA/BmrgOIHi9rZqXnvQ9mi+7DnIwbC0S514yvhgC5i+fyHMhkgpFT/1hAMkDZRDMk9nzoQeI40Iu/7YkKiV6oqYa+A9kMDc4fhIHf8TSVAKu+5Gmdyyq+iELlcUDNYjNX1tC7RZDwIDAQAB
+-----END PUBLIC KEY-----`
+
+	message := MakeRsaMessage("20201126102553427", "32", "2011", "123456", "888888", cpStr, "1", "1", "true", publicKey)
+	fmt.Println(message[0])
+
+}
