@@ -85,7 +85,7 @@ func NewMessage(message string) (*Hj212Message, error) {
 	}
 	flagStr := utils.SubstringBetween(message, PrefixFlag, Suffix)
 	if flagStr == "" {
-		return nil, errors.New("missing flag field")
+		flagStr = "4"
 	}
 	cpStr := utils.SubstringBetween(message, PrefixCP, "&&")
 	pwStr := utils.SubstringBetween(message, PrefixPW, Suffix)
