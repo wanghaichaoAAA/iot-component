@@ -25,8 +25,7 @@ func ConvertToBinaryArr(numStr string) []rune {
 	}
 	numInt, err := strconv.Atoi(numStr)
 	if err != nil {
-		//utilsLogger.Error("不是数字")
-		return []rune("")
+		numInt = 4
 	}
 	if numInt < 0 || numInt > 255 {
 		return []rune("")
